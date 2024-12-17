@@ -73,6 +73,20 @@ Note the value of a variable in a String template does not change even if the va
     println(s1) // a is 1
 ```
 
+## Triple-quoted Strings
+This can be useful for JSON, HTML etc.
+```kotlin
+val kotlinLogo =
+    """
+    | //
+    |//
+    |/ \
+    """.trimIndent()
+```
+`trimIndent` - Removes that common minimal indent of all the lines of your string and remove the first and last lines of the string, given they are blank.
+
+You don’t have to escape `\`, so the Windows-style path `C:\\Users\\yole\\kotlin-book` can be written as `"""C:\Users\yole\kotlin-book"""`
+
 ## Enums
 `enum` is a "soft keyword", i.e. it can be used as a function, variable name, or parameter.
 `class` keyword is required here
@@ -86,7 +100,7 @@ enum class Color {
 **Examples**
 - [Enum with properties](src/01/enums/withProperties.kt)
 - [Looping enum with when](src/01/enums/looping.kt)
-- [Looping enum with when with multiple values in teh same branch](src/01/enums/loopingCombined.kt)
+- [Looping enum with when with multiple values in the same branch](src/01/enums/loopingCombined.kt)
 
 ## Classes
 

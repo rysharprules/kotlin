@@ -12,3 +12,4 @@ Study notes and examples for Kotlin from absolute beginner onwards.
 ## Contents
 
 1. [Basics](01_basics.md)
+2. [Functions](02_functions.md)
