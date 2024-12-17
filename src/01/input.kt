@@ -1,4 +1,4 @@
-package `01`.input
+package `01`
 
 fun main() {
     // Prints a message to request input

@@ -4,8 +4,13 @@
 - `;` is not required at the end of a line
 - There's no `new` keyword in Kotlin
 - Comments are the same as most languages, single line `//` or multi-line `/*` `*/`
-- There are no 'Checked' exceptions
+- There are no 'Checked' exceptions and there is no `throws` keyword
 - Kotlin does not have `static` types. Top-level functions (outside of any class) are global and can be accessed in a static-like way
+- The directory and package hierarchy do not need to match, but it is good practice that they do
+
+**Examples**
+- [hello world](src/01/helloworld.kt) :)
+- [Reading input](src/01/input.kt)
 
 ## Functions
 
@@ -34,9 +39,10 @@ fun sum(a: Int, b: Int) = a + b
 - Mutable variables with `var`
 
 Assign with `=` operator. Kotlin will _infer_ the type (similar to `var` in Java):
-```
+```kotlin
 val customers = 10
 var x: Int = 5 // You can declare the type. Without initialization; type is required
+val yearsToCompute = 7.5e6 // (Double)
 ```
 
 ## String templates
@@ -66,6 +72,21 @@ Note the value of a variable in a String template does not change even if the va
     println(a) // 2
     println(s1) // a is 1
 ```
+
+## Enums
+`enum` is a "soft keyword", i.e. it can be used as a function, variable name, or parameter.
+`class` keyword is required here
+No need for `;` to end the list of enums unless properties are declared
+```kotlin
+enum class Color {
+    RED, ORANGE, YELLOW, GREEN, BLUE, INDIGO, VIOLET
+}
+```
+
+**Examples**
+- [Enum with properties](src/01/enums/withProperties.kt)
+- [Looping enum with when](src/01/enums/looping.kt)
+- [Looping enum with when with multiple values in teh same branch](src/01/enums/loopingCombined.kt)
 
 ## Classes
 
@@ -171,6 +192,20 @@ while (index < items.size) {
 // item at 2 is kiwifruit
 ```
 
+#### Labels
+For nested loops you can label with `@` to `break` or `continue`
+```kotlin
+outer@ while (outerCondition) { 
+    while (innerCondition) {
+        if (shouldExitInner) break
+        if (shouldSkipInner) continue 
+        if (shouldExit) break@outer 
+        if (shouldSkip) continue@outer // ...
+    }  
+// ...
+}
+```
+
 ### when
 Similar to Java `switch`. This is an expression so the value is returned with no fall-through.
 Accepts any type of object, e.g. primitives (Int, String) and custom classes using the `equals()` by default.
@@ -218,6 +253,10 @@ if (x in 1..y+1) {
     println("fits in range")
 }
 ```
+
+**Examples**
+- [Fizzbuzz](src/01/range/fizzbuzz.kt)
+- [Validation with ranges](src/01/range/validation.kt) including characters `in 'a'..'z' and opposites with `!in`
 
 ## Collections
 Kotlin has `List`s, `Set`s, and `Map`s.
@@ -275,6 +314,9 @@ fruits
 // AVOCADO
 ```
 
+**Examples**
+- [Map](src/01/collections/map.kt)
+
 ## Null
 A reference must be explicitly marked as nullable when null value is possible with `?`
 ```kolin
@@ -289,3 +331,6 @@ if (obj is String) {
     return obj.length // obj is automatically cast to String
 }
 ```
+
+**Examples**
+- [Sum operation with smart casts](src/01/smartcast/sumOperation.kt)
