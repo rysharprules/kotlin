@@ -4,9 +4,6 @@ Defining and calling functions
 - You can change the name of the class or function you’re importing using the `as` keyword to avoid conflicts
 - Local functions are inner functions. They have access to everything in the enclosing function
 
-**Examples**
-- []()
-
 ## Default parameter values
 ```kotlin
 fun <T> joinToString(
@@ -85,7 +82,9 @@ val (number, name) = 1 to "one"
 ```
 
 This feature is called a destructuring declaration.
+
 <img src=img/02_infix.png width=250 height=240>
+
 You create a pair using the `to` function and unpack it with a destructuring declaration.
 
 ## Extensions
@@ -109,6 +108,18 @@ fun main() {
 }
 ```
 
+## Scope functions
+| Function | Receiver Object        | Return Value                    | Typical Use Case |
+|----------|------------------------|---------------------------------|------------------|
+| `also`   | `it` (object itself)    | Returns the object itself       | Performing side effects (logging, etc.) without changing the object. |
+| `let`    | `it` (object itself)    | The last expression inside the block | Transforming an object and returning a result, especially with nullable types. |
+| `apply`  | `this` (object itself)  | Returns the object itself       | Mutating or modifying the object and returning it. |
+| `run`    | No receiver object      | The last expression inside the block | Performing actions on non-nullable objects or code blocks that return a result. |
+| `with`   | No receiver object (explicit receiver) | The last expression inside the block | Performing actions on an object, using its properties and methods without modifying it. |
+
+**Examples**
+- [Scope functions](src/02/scopeFunctions.kt)
+
 ### Properties
 ```kotlin
 val String.lastChar: Char // allows you to call "myText".lastChar
@@ -131,6 +142,23 @@ fun main() {
 ```
 
 ## Functions
+
+### filter
+Filter is built into [collections rather than the Java Stream API](https://kotlinlang.org/docs/java-to-kotlin-collections-guide.html#filter-elements) and returns the same collection type that was filtered
+```kotlin
+val positives = list.filter { x -> x > 0 }
+val positives = list.filter { it > 0 } // shorter version
+```
+
+### in
+Alternative to Java `contains`, `in` can be used to check presence of an element in a collection.
+Also used to loop through a collection
+```kotlin
+if ("john@example.com" in emailsList) { ... }
+if ("jane@example.com" !in emailsList) { ... }
+
+for (email in emailsList) { ... }
+```
 
 ### javaClass
 Kotlin’s equivalent of Java’s `getClass()`.
@@ -192,7 +220,6 @@ fun main() {
     // Dir: /Users/ry/kotlin-book, name: chapter, ext: adoc
 }
 ```
-
 
 ### substringBeforeLast, substringAfterLast
 ```kotlin

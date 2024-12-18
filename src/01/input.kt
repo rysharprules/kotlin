@@ -11,4 +11,8 @@ fun main() {
     print("You entered the word: ")
     print(yourWord)
     // You entered the word: Happiness
+
+    // Reads a string and returns null if the input can't be converted into an integer.
+    val intOrNull = readln().toIntOrNull()
+    println(intOrNull)
 }

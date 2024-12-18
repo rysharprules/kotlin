@@ -1,12 +1,14 @@
 # Basics
 
+- The root of the Kotlin class hierarchy is [Any](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/). Every Kotlin class has `Any` as a superclass.
 - The main entry point of a Kotlin program is the `main` function. This does not require the input arguments, i.e. `fun main(args: Array<String>)`
 - `;` is not required at the end of a line
 - There's no `new` keyword in Kotlin
 - Comments are the same as most languages, single line `//` or multi-line `/*` `*/`
 - There are no 'Checked' exceptions and there is no `throws` keyword
 - Kotlin does not have `static` types. Top-level functions (outside of any class) are global and can be accessed in a static-like way
-- The directory and package hierarchy do not need to match, but it is good practice that they do
+- [Unit](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/) is synonymous with `void` in Java
+- Kotlin's standard library has a `TODO()` function that will always throw a `NotImplementedError`
 
 **Examples**
 - [hello world](src/01/helloworld.kt) :)
@@ -37,12 +39,20 @@ fun sum(a: Int, b: Int) = a + b
 
 - Read-only variables with `val`
 - Mutable variables with `var`
+- Compile-time constants `const`
 
 Assign with `=` operator. Kotlin will _infer_ the type (similar to `var` in Java):
 ```kotlin
 val customers = 10
 var x: Int = 5 // You can declare the type. Without initialization; type is required
 val yearsToCompute = 7.5e6 // (Double)
+```
+
+Names of constants (properties marked with const, or top-level or object val properties with no custom get function that 
+hold deeply immutable data) should use all uppercase, underscore-separated names following the (screaming snake case)
+```kotlin
+const val MAX_COUNT = 8
+val USER_NAME_FIELD = "UserName"
 ```
 
 ## String templates
@@ -236,7 +246,35 @@ fun describe(obj: Any): String =
     }
 ```
 
-For `is` see Type checks in this page.
+#### Guard conditions
+Guard conditions allow you to include more than one condition to the branches of a when expression, making complex control flow more explicit and concise.
+To include a guard condition in a branch, place it after the primary condition, separated by `if`
+```kotlin
+sealed interface Animal {
+    data class Cat(val mouseHunter: Boolean) : Animal
+    data class Dog(val breed: String) : Animal
+}
+
+fun feedAnimal(animal: Animal) {
+    when (animal) {
+        // Branch with only primary condition. Calls `feedDog()` when `Animal` is `Dog`
+        is Animal.Dog -> feedDog()
+        // Branch with both primary and guard conditions. Calls `feedCat()` when `Animal` is `Cat` and is not `mouseHunter`
+        is Animal.Cat if !animal.mouseHunter -> feedCat()
+        // Calls giveLettuce() if none of the above conditions match and animal.eatsPlants is true
+        else if animal.eatsPlants -> giveLettuce()
+        // Prints "Unknown animal" if none of the above conditions match
+        else -> println("Unknown animal")
+    }
+}
+```
+
+Combine multiple guard conditions within a single branch using the boolean operators `&&` (AND) or `||` (OR). Use parentheses around the boolean expressions to avoid confusion
+```kotlin
+when (animal) {
+    is Animal.Cat if (!animal.mouseHunter && animal.hungry) -> feedCat()
+}
+```
 
 ## Ranges
 Can be used as alternative to classic `for (int i = 0; i < XXXX; i++)`
@@ -244,6 +282,8 @@ Can be used as alternative to classic `for (int i = 0; i < XXXX; i++)`
 for (x in 1..5) {
     print(x)
 }
+
+(1..10).forEach { ... }
 ```
 
 `downTo` can reverse the direction
@@ -306,6 +346,76 @@ mutableCountryCapital.remove("France") // Removes France from the map
 println(mutableCountryCapital) // Output: {USA=Washington, D.C., Germany=Berlin}
 ```
 
+### Accessing
+#### Lists
+```kotlin
+val element = countries[2]
+// The index operator [] is less noisy than the get() method and is more convenient
+val element = countries.get(3)
+```
+
+Additionally, there are helper methods to get the first and last items
+```kotlin
+countries.first()
+countries.last()
+countries.first { it.length > 7 }
+countries.last { it.startsWith("J") }
+countries.firstOrNull { it.length > 8 }
+```
+
+#### Sets
+You cannot access elements in a `Set` by index because it is unordered.
+If you just need an element from the set, you can use methods like `first()`, `last()`, or `random()`
+Use iteration (`for`, `forEach`) or membership checks (`contains` or `in`)
+```kotlin
+val set = setOf(1, 2, 3, 4)
+
+// Iterate through the set
+set.forEach { println(it) }
+
+// Check for membership
+if (3 in set) {
+    println("3 is in the set")
+}
+```
+
+#### Maps
+```kotlin
+println(map["key"])
+map["key"] = value
+```
+
+### Traversing
+#### Lists and Sets
+```kotlin
+for (country in countries) {
+    country.length
+    // ...
+}
+
+for (i in 0 until countries.size) {
+    countries[i].length
+    // ...
+}
+
+countries.forEach { it ->
+    it.length
+    // ...
+}
+
+// forEachIndexed() method performs an action on each element along with providing a sequential index with the element.
+countries.forEachIndexed { i, e ->
+    e.length
+    // ...
+}
+```
+#### Maps
+```kotlin
+for ((k, v) in map) {
+    println("$k -> $v")
+}
+```
+
 #### Using Ranges
 ```kotlin
 val rangeList = (1..5).toList() // Creates a list from 1 to 5
@@ -336,6 +446,28 @@ A reference must be explicitly marked as nullable when null value is possible wi
 ```kolin
 fun parseInt(str: String): Int? {
 ```
+
+### If-not-null shorthand
+```kotlin
+val files = File("Test").listFiles()
+println(files?.size) // size is printed if files is not null
+
+// If-not-null-else
+println(files?.size ?: "empty") // if files is null, this prints "empty"
+
+// To calculate a more complicated fallback value in a code block, use `run`
+val filesSize = files?.size ?: run {
+    val someSize = getSomeSize()
+    someSize * 2
+}
+println(filesSize)
+
+// Execute a statement if null
+val values = ...
+val email = values["email"] ?: throw IllegalStateException("Email is missing!")
+```
+
+
 
 ## Type checks
 `is` is used for type checks, similar to `instanceof`

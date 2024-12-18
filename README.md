@@ -3,6 +3,7 @@
 Study notes and examples for Kotlin from absolute beginner onwards.
 
 **Useful Links**
+- [Kotlin API library](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/)
 - [Kotlin tour (official docs)](https://kotlinlang.org/docs/kotlin-tour-welcome.html)
 - [Run Kotlin code online](https://play.kotlinlang.org/)
 
@@ -13,3 +14,4 @@ Study notes and examples for Kotlin from absolute beginner onwards.
 
 1. [Basics](01_basics.md)
 2. [Functions](02_functions.md)
+3. [Classes and interfaces](03_classes_interfaces.md)
