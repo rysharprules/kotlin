@@ -111,6 +111,67 @@ abstract class MyAbstractClass {
 | `protected`| Visible in subclasses            | —                               |
 | `private`  | Visible in a class               | Visible in a file               |
 
+## Inner and nested classes
+
+A nested class in Kotlin with no explicit modifiers is the same as a `static`
+nested class in Java.
+
+```kotlin
+class Button : View {
+    override fun getCurrentState(): State = ButtonState()
+    override fun restoreState(state: State) { /*...*/ }
+    class ButtonState : State { /*...*/ }  // This class is an analogue of a static nested class in Java.
+}
+```
+
+To turn it into an inner class so that it contains a reference
+to an outer class, you use the `inner` modifier
+
+Nested classes don’t reference their outer class, whereas inner
+classes do:
+<img src=img/03_nested_class_this.png width="600" height="180">
+```kotlin
+class Outer {
+    inner class Inner {
+        fun getOuterReference(): Outer = this@Outer
+    }
+}
+```
+
+**Correspondence between nested and inner classes in Java and Kotlin**
+
+| **Class A declared within another class B** | **In Java**         | **In Kotlin**      |
+|----------------------------------------------|---------------------|--------------------|
+| **Nested class (doesn’t store a reference to an outer class)** | static class A       | class A            |
+| **Inner class (stores a reference to an outer class)**      | class A             | class A inner      |
+
+## Sealed classes and interfaces
+
+All direct subclasses of a `sealed` class must:
+- be known at compile time 
+- declared in the same package as the `sealed` class itself
+- all subclasses need to be located within the same module
+
+sealed modifier implies that the class is `abstract`; you don’t need an explicit `abstract` modifier and can
+declare `abstract` members.
+
+```kotlin
+sealed class Expr 
+class Num(val value: Int) : Expr()
+class Sum(val left: Expr, val right: Expr) : Expr()
+
+fun eval(e: Expr): Int =
+    // If you handle all subclasses of a sealed class in a when expression, you
+    // don’t need to provide the default branch—the compiler can ensure you’ve
+    // covered all possible branches.
+    when (e) { 
+        is Num -> e.value
+        is Sum -> eval(e.right) + eval(e.left)
+    }
+```
+
+The same rules apply for interfaces. [Example sealed interface](src/03/interfaces/sealed.kt)
+
 ## Objects
 
 ### apply
@@ -143,5 +204,3 @@ with(myTurtle) { //draw a 100 pix square
     penUp()
 }
 ```
-
-// TODO: 4.1.4 Inner and nested classes: Nested by default #173
