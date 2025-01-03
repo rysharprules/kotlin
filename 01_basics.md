@@ -159,6 +159,62 @@ class Rectangle(val width: Int, val height: Int) {
 ```
 Or more succinctly `val area get() = this.width * this.height`
 
+##### Custom accessor visibility
+
+By default, the accessor’s visibility is the same as the property’s
+```kotlin
+class LengthCounter {
+    var counter: Int = 0 // counter is public
+        private set 
+    
+    fun addWord(word: String) {
+        counter += word.length
+    }
+}
+
+fun main() {
+    val lengthCounter = LengthCounter()
+    lengthCounter.addWord("Hi!")
+    println(lengthCounter.counter) // 3
+
+    lengthCounter.counter = 0 // Error: Cannot assign to 'counter': the setter is private in 'LengthCounter'
+}
+```
+
+##### Accessing backing field from a getter
+
+In the body of the setter, you use the special identifier `field` to access the
+value of the backing field
+In a getter, you can only read the value.
+```kotlin
+class User(val name: String) {
+    var address: String = "unspecified"
+        set(value: String) {
+            println( // Reads the backing field value
+                """
+                Address was changed for $name:
+                "$field" -> "$value".
+                """.trimIndent()
+            )
+            field = value // Updates the backing field value with the provided string
+    }
+}
+
+fun main() {
+    val user = User("Alice")
+    user.address = "Christoph-Rapparini-Bogen 23"
+    // Address was changed for Alice:
+    // "unspecified" -> "Christoph-Rapparini-Bogen 23".
+}
+```
+
+Backing field auto-creation by compiler:
+- The compiler will generate the backing field for the property if you either reference it explicitly or use
+  the default accessor implementation.
+- If you provide custom accessor implementations that don’t use `field` (for the getter if the property is 
+ a `val` and for both accessors if it’s a mutable property), the compiler understands that the property 
+ doesn’t need to store any information itself, so no backing field will be generated.
+
 ### Inheritance
 
 Declared by a colon `:`. Classes are final by default; to make a class inheritable, mark it as `open`:

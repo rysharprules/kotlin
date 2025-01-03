@@ -2,6 +2,36 @@
 
 - There is no package private in Kotlin
 
+## Constructors
+
+The `constructor` keyword begins the declaration of a primary or secondary constructor
+The `init` keyword introduces an initializer block, executed when the class is created
+and are intended to be used together with primary constructors
+
+**Examples**
+- [Primary constructor and init block](src/03/constructors/init.kt)
+- [Superclasses with and without arguments](src/03/constructors/superclass.kt)
+- [Private constructor](src/03/constructors/private.kt)
+- [Constructor with arguments with default values](src/03/constructors/defaultArgumentValues.kt)
+
+### Secondary (multiple) constructors
+
+Less common than in Java. Most situations where you’d need overloaded constructors are covered 
+by Kotlin’s support for default parameter values and named argument syntax.
+
+Subclasses can use `super` and `this` to delegate.
+
+If the class has no primary constructor, then each secondary constructor must initialize the 
+base class or delegate to another constructor that does so. Thinking in terms of the diagrams
+below, each secondary constructor must have an outgoing arrow starting a path that ends at 
+any constructor of the base class. 
+
+This is demonstrated in the [Example code](src/03/constructors/secondary.kt).
+
+<img src=img/03_secondary_constructor_super.png width="600" height="180">
+
+<img src=img/03_secondary_constructor_this.png width="600" height="180">
+
 ## Interfaces
 
 `override` modifier is mandatory
@@ -38,6 +68,32 @@ for `click`. You can redefine the behavior of the `showOff` method or use the de
 **Examples**
 - [Default implementation](src/03/interfaces/defaultImplementations.kt)
 
+### Properties declared in interfaces
+
+An `interface` can contain abstract property declarations which need to be overridden in implementing classes.
+
+
+```kotlin
+interface User {
+    val nickname: String
+}
+```
+Classes implementing the `User` interface above need to provide a way to obtain the value of 
+`nickname`. 
+
+The interface doesn’t specify whether the value should be stored in a backing field or obtained through a getter.
+See [examples of interface properties overridden](src/03/interfaces/properties.kt).
+
+The interface _can_ contain properties with getters and setters, as long as they don't reference a backing field.
+
+```kotlin
+interface EmailUser {
+    val email: String
+    val nickname: String
+        get() = email.substringBefore('@') // The property doesn’t have a backing field: the result value is computed on each access.  
+}
+```
+
 ## DTOs (POJOs/POCOs)
 
 [DTO - Data transfer object](https://en.wikipedia.org/wiki/Data_transfer_object)
@@ -54,14 +110,6 @@ Additionally, `data` provides:
 * hashCode()
 * toString()
 * copy()
-
-## Singletons
-
-```kotlin
-object Resource {
-    val name = "Name"
-}
-```
 
 ## Open and abstract classes
 
