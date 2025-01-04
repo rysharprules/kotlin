@@ -1,6 +1,8 @@
 # Classes, objects and interfaces
 
 - There is no package private in Kotlin
+- In Kotlin, `==` checks whether the objects are equal, not the references. It is
+  compiled to a call of equals. For reference comparison, use the `===` operator
 
 ## Constructors
 
@@ -111,6 +113,16 @@ Additionally, `data` provides:
 * toString()
 * copy()
 
+You can override these:
+```kotlin
+class Customer(val name: String, val postalCode: Int) {
+    override fun toString() = "Customer(name=$name, postalCode=$postalCode)"
+}
+```
+**Examples**
+- [Overriding generated methods](src/03/dto.kt)
+- [The copy method](src/03/copy.kt) - a method that allows you to copy the instances of your classes, changing the values of some properties
+
 ## Open and abstract classes
 
 You can’t create a subclass for a Kotlin class or override any methods from a base class — all classes and methods are `final`, by default.
@@ -219,6 +231,33 @@ fun eval(e: Expr): Int =
 ```
 
 The same rules apply for interfaces. [Example sealed interface](src/03/interfaces/sealed.kt)
+
+## Class delegation
+
+If you need to add behavior to another class, even if it wasn’t designed to be extended, you may use the decorator pattern.
+This often requires a large amount of boilerplate code:
+
+```kotlin
+class DelegatingCollection<T> : Collection<T> {
+    private val innerList = arrayListOf<T>()
+    override val size: Int get() = innerList.size
+    override fun isEmpty(): Boolean = innerList.isEmpty()
+    override fun contains(element: T): Boolean = innerList.contains(element)
+    override fun iterator(): Iterator<T> = innerList.iterator()
+    override fun containsAll(elements: Collection<T>): Boolean =innerList.containsAll(elements)
+}
+```
+
+Use the `by` keyword to delegate the implementation of an interface to another object. All the method 
+implementations in the class are gone. The compiler will generate them:
+
+```kotlin
+class DelegatingCollection<T>(
+    innerList: Collection<T> = mutableListOf<T>()) : Collection<T> by innerList
+```
+
+When you need to change the behavior of some methods, you can override them, and your code will be called 
+instead of the generated methods. [See example](src/03/by.kt)
 
 ## Objects
 
