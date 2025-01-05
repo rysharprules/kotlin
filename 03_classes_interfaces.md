@@ -261,33 +261,35 @@ instead of the generated methods. [See example](src/03/by.kt)
 
 ## Objects
 
-### apply
-This is useful for configuring properties that aren't present in the object constructor.
-```kotlin
-val myRectangle = Rectangle().apply {
-    length = 4
-    breadth = 5
-    color = 0xFAFAFA
-}
-```
+When you want a class for which you need only one instance, you can use the `object` keyword. Rather than the Singleton pattern.
 
-### with
-With `with` you can call multiple methods on an object instance
-```kotlin
-class Turtle {
-    fun penDown()
-    fun penUp()
-    fun turn(degrees: Double)
-    fun forward(pixels: Double)
-}
+The object declaration combines a class declaration and a declaration of a single instance of that class.
 
-val myTurtle = Turtle()
-with(myTurtle) { //draw a 100 pix square
-    penDown()
-    for (i in 1..4) {
-        forward(100.0)
-        turn(90.0)
+Unlike instances of regular classes, object declarations are created immediately at the point of definition, not through constructor calls from other places in the code.
+```kotlin
+object Payroll {
+  val allEmployees = mutableListOf<Person>()
+  fun calculateSalary() {
+    for (person in allEmployees) {
+      /* ... */
     }
-    penUp()
+  }
+}
+
+fun main() {
+  Payroll.allEmployees.add(Person("Alice"))
+  Payroll.calculateSalary()
 }
 ```
+Examples:
+- [Object in a class](src/03/objects/objectInClass.kt)
+- [Comparator example](src/03/objects/comparator.kt)
+- [Comparator in a class](src/03/objects/comparatorInClass.kt)
+
+### Companion objects
+
+Similar to `static` members in Java, but they can also implement interfaces. 
+
+Examples:
+- [Basic companion object](src/03/objects/companion.kt)
+- [Companion object used for factory pattern](src/03/objects/companionFactory.kt)
