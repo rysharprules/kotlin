@@ -481,19 +481,6 @@ val rangeSet = (1..5).toSet() // Creates a set from 1 to 5
 println(rangeSet) // Output: [1, 2, 3, 4, 5]
 ```
 
-### Functions on Collections
-Lambda expressions can be used
-```kotlin
-val fruits = listOf("banana", "avocado", "apple", "kiwifruit")
-fruits
-    .filter { it.startsWith("a") }
-    .sortedBy { it }
-    .map { it.uppercase() }
-    .forEach { println(it) }
-// APPLE
-// AVOCADO
-```
-
 **Examples**
 - [Map](src/01/collections/map.kt)
 

@@ -15,3 +15,5 @@ Study notes and examples for Kotlin from absolute beginner onwards.
 1. [Basics](01_basics.md)
 2. [Functions](02_functions.md)
 3. [Classes and interfaces](03_classes_interfaces.md)
+4. [Lambdas](04_lambdas.md)
+5. [Collections](05_collections.md)

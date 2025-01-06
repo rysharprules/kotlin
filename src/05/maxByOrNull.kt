@@ -1,6 +1,4 @@
-package `04`
-
-data class Person(val name: String, val age: Int)
+package `05`
 
 fun findTheOldestManually(people: List<Person>) {
     var maxAge = 0
@@ -14,8 +12,10 @@ fun findTheOldestManually(people: List<Person>) {
 }
 
 fun main() {
-    val people = listOf(Person("Alice", 29), Person("Bob",
-        31))
+    val people = listOf(
+        Person("Alice", 29), Person("Bob",
+        31)
+    )
     findTheOldestManually(people)
     // Person(name=Bob, age=31)
 
@@ -25,4 +25,11 @@ fun main() {
 
     // You can use a method reference
     println(people.maxByOrNull(Person::age))
+
+    println(people.filter { it.age > 30 }.map(Person::name)) // [Bob]
+
+    val maxAge = people.maxByOrNull(Person::age)?.age
+    println(maxAge) // 31
+    val result = people.filter { it.age == maxAge }
+    println(result) // [Person(name=Bob, age=31)]
 }
