@@ -17,3 +17,4 @@ Study notes and examples for Kotlin from absolute beginner onwards.
 3. [Classes and interfaces](03_classes_interfaces.md)
 4. [Lambdas](04_lambdas.md)
 5. [Collections](05_collections.md)
+6. [Nullable](06_nullable.md)

@@ -55,7 +55,9 @@ const val MAX_COUNT = 8
 val USER_NAME_FIELD = "UserName"
 ```
 
-## String templates
+## Strings 
+
+### String templates
 
 - Include a variable in a String with the dollar sign `$`
 - Include an expression in a String with a dollar sign and curly braces `${...}`
@@ -83,7 +85,7 @@ Note the value of a variable in a String template does not change even if the va
     println(s1) // a is 1
 ```
 
-## Triple-quoted Strings
+### Triple-quoted Strings
 This can be useful for JSON, HTML etc.
 ```kotlin
 val kotlinLogo =
@@ -96,6 +98,9 @@ val kotlinLogo =
 `trimIndent` - Removes that common minimal indent of all the lines of your string and remove the first and last lines of the string, given they are blank.
 
 You don’t have to escape `\`, so the Windows-style path `C:\\Users\\yole\\kotlin-book` can be written as `"""C:\Users\yole\kotlin-book"""`
+
+### `isBlank`
+Checks if a String consists only of whitespace characters. See [examples](src/01/isBlank.kt).
 
 ## Enums
 `enum` is a "soft keyword", i.e. it can be used as a function, variable name, or parameter.
@@ -402,6 +407,13 @@ mutableCountryCapital.remove("France") // Removes France from the map
 println(mutableCountryCapital) // Output: {USA=Washington, D.C., Germany=Berlin}
 ```
 
+You can create empty lists with `emptyList`:
+```kotlin
+fun main() {
+    println(emptyList<Int>().any { it > 42 }) // false
+}
+```
+
 ### Accessing
 #### Lists
 ```kotlin
@@ -472,6 +484,8 @@ for ((k, v) in map) {
 }
 ```
 
+More on [Collections](05_collections.md)
+
 #### Using Ranges
 ```kotlin
 val rangeList = (1..5).toList() // Creates a list from 1 to 5
@@ -510,7 +524,7 @@ val values = ...
 val email = values["email"] ?: throw IllegalStateException("Email is missing!")
 ```
 
-
+More on [Nullable](06_nullable.md)
 
 ## Type checks
 `is` is used for type checks, similar to `instanceof`
