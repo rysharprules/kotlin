@@ -109,13 +109,13 @@ fun main() {
 ```
 
 ## Scope functions
-| Function | Receiver Object        | Return Value                    | Typical Use Case |
-|----------|------------------------|---------------------------------|------------------|
-| `also`   | `it` (object itself)    | Returns the object itself       | Performing side effects (logging, etc.) without changing the object. |
-| `let`    | `it` (object itself)    | The last expression inside the block | Transforming an object and returning a result, especially with nullable types. |
-| `apply`  | `this` (object itself)  | Returns the object itself       | Mutating or modifying the object and returning it. |
-| `run`    | No receiver object      | The last expression inside the block | Performing actions on non-nullable objects or code blocks that return a result. |
-| `with`   | No receiver object (explicit receiver) | The last expression inside the block | Performing actions on an object, using its properties and methods without modifying it. |
+| Function | Receiver Object        | Return Value                    | Typical Use Case                                                                                                                      |
+|----------|------------------------|---------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| `also`   | `it` (object itself)    | Returns the object itself       | Performing side effects (logging, etc.) without changing the object. See [04. Lambdas](04_lambdas.md)                                 |
+| `let`    | `it` (object itself)    | The last expression inside the block | Transforming an object and returning a result, especially with nullable types. See [06. Nullable](06_nullable.md)                     |
+| `apply`  | `this` (object itself)  | Returns the object itself       | Mutating or modifying the object and returning it. See [04. Lambdas](04_lambdas.md)                                                   |
+| `run`    | No receiver object      | The last expression inside the block | Performing actions on non-nullable objects or code blocks that return a result.                                                       |
+| `with`   | No receiver object (explicit receiver) | The last expression inside the block | Performing actions on an object, using its properties and methods without modifying it. See Conditonals in [01. Basics](01_basics.md) |
 
 **Examples**
 - [Scope functions](src/02/scopeFunctions.kt)
