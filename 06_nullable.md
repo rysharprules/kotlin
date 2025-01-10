@@ -147,3 +147,10 @@ fun main() {
 
 This is only possible for extension functions; regular member calls are dispatched through the object 
 instance and, therefore, can never be performed when the instance is `null`.
+
+## Collections and nullable types
+A collection and/or the elements themselves can be nullable. 
+
+<img src=/img/06_nullable_collection1.png width=450 height=200>
+
+<img src=/img/06_nullable_collection2.png width=225 height=200>

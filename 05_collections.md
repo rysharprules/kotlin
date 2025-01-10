@@ -1,6 +1,21 @@
 # Collections
 See [Basics](01_basics.md) for creating and accessing collections.
 
+## Collection immutability
+But every Java
+collection interface has two representations in Kotlin: a read-only one and a mutable one.
+
+<img src=img/05_collection_hierarchy.png width=500 height=320>
+
+`Map` class (which doesn’t extend `Collection` or `Iterable`) is also represented in Kotlin as two 
+distinct versions: `Map` and `MutableMap`.
+
+| Collection | Readonly                                   | Mutable                                                |
+|------------|--------------------------------------------|--------------------------------------------------------|
+| List       | listOf                                     | mutableListOf, MutableList, arrayListOf, buildList     |
+| Set        | setOf                                      | mutableSetOf, hashSetOf, linkedSetOf, sortedSetOf, buildSet |
+| Map        | mapOf                                      | mutableMapOf, hashMapOf, linkedMapOf, sortedMapOf, buildMap |
+
 ## Functions on Collections
 - Does not use Java `Stream` API, but has similar functions.
 - Calling a function such as `filter` on a collection returns a new collection with the elements that match the predicate - not a Stream.

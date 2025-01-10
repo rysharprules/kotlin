@@ -9,6 +9,7 @@
 - Kotlin does not have `static` types. Top-level functions (outside of any class) are global and can be accessed in a static-like way
 - [Unit](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/) is synonymous with `void` in Java
 - Kotlin's standard library has a `TODO()` function that will always throw a `NotImplementedError`
+- Functions can return `Nothing`. It has no value. It is used to indicate that the function never returns normally.
 
 **Examples**
 - [hello world](src/01/helloworld.kt) :)
@@ -101,6 +102,56 @@ You don’t have to escape `\`, so the Windows-style path `C:\\Users\\yole\\kotl
 
 ### `isBlank`
 Checks if a String consists only of whitespace characters. See [examples](src/01/isBlank.kt).
+
+## Unsigned number types
+Unsigned number types “shift” the value range compared to their signed counterparts, allowing you to 
+store larger non-negative numbers in the same amount of memory.
+
+| Type   | Size    | Value range        |
+|--------|---------|--------------------|
+| UByte  | 8 bit   | 0 - 255            |
+| UShort | 16 bit  | 0 - 65535          |
+| UInt   | 32 bit  | 0 - 2^32 - 1       |
+| ULong  | 64 bit  | 0 - 2^64 - 1       |
+<img src=img/01_ubyte.png width=600 height=170>
+
+## Arrays
+
+```kotlin
+fun main(args: Array<String>) {
+    // Uses the array.indices extension property to iterate over the range of indices
+    for (i in args.indices) { 
+        println("Argument $i is: ${args[i]}") // Accesses elements by index with array[index]
+    }
+}
+```
+
+- The `arrayOf` function creates an array containing the elements specified as arguments to this function.
+- The `arrayOfNulls` function creates an array of a given size containing `null` elements.
+- The `Array` constructor takes the size of the array and a lambda and initializes each array element 
+by calling the lambda. This is how you can initialize an array with a non-null element type without passing
+each element explicitly:
+```kotlin
+fun main() {
+    val letters = Array<String>(26) { i -> ('a' + i).toString() }
+    // element type can be omitted
+    // val letters = Array(26) { i -> ('a' + i).toString() }
+    println(letters.joinToString("")) // abcdefghijklmnopqrstuvwxyz
+}
+```
+
+To represent arrays of primitive types, Kotlin provides a number of separate classes—one for each 
+primitive type. For example, an array of values of type `Int` is called `IntArray`. For other types, 
+Kotlin provides `ByteArray`, `CharArray`, `BooleanArray`, and so on.
+
+### Convert to Array with `toTypedArray()`
+```kotlin
+fun main() {
+    val strings = listOf("a", "b", "c")
+    // The spread operator (*) is used to pass an array when vararg parameters are expected.
+    println("%s/%s/%s".format(*strings.toTypedArray())) // a/b/c
+}
+```
 
 ## Enums
 `enum` is a "soft keyword", i.e. it can be used as a function, variable name, or parameter.
