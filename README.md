@@ -18,3 +18,4 @@ Study notes and examples for Kotlin from absolute beginner onwards.
 4. [Lambdas](04_lambdas.md)
 5. [Collections](05_collections.md)
 6. [Nullable](06_nullable.md)
+7. [Operator overloading](07_operator_overloading.md)

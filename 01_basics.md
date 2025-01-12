@@ -153,6 +153,25 @@ fun main() {
 }
 ```
 
+## Bitwise operations
+Kotlin doesn’t define any bitwise operators for standard number types.
+It uses regular functions supporting the infix call syntax:
+- shl —Signed shift left
+- shr —Signed shift right
+- ushr —Unsigned shift right
+- and —Bitwise and
+- or —Bitwise or
+- xor —Bitwise xor
+- inv —Bitwise inversion
+
+```kotlin
+fun main() {
+    println(0x0F and 0xF0) // 0
+    println(0x0F or 0xF0) // 255
+    println(0x1 shl 4) // 16
+}
+```
+
 ## Enums
 `enum` is a "soft keyword", i.e. it can be used as a function, variable name, or parameter.
 `class` keyword is required here
@@ -397,6 +416,9 @@ for (x in 1..5) {
 
 (1..10).forEach { ... }
 ```
+
+Note the range is `1` to `5` inclusive. To exclude the last value, use `until` or make it an _open range_ with `<` operator
+which means the range is `1` to `4`.
 
 `downTo` can reverse the direction
 `step` can step over (or skip) the progression

@@ -123,6 +123,13 @@ class Customer(val name: String, val postalCode: Int) {
 - [Overriding generated methods](src/03/dto.kt)
 - [The copy method](src/03/copy.kt) - a method that allows you to copy the instances of your classes, changing the values of some properties
 
+### `==` and `equals`
+
+The comparison `a == b` checks whether `a` isn’t null , and if it’s not, calls `a.equals(b)`- otherwise, the result is true only if both arguments are null
+references.
+
+<img src=img/03_equals.png width="390" height="30">
+
 ## Open and abstract classes
 
 You can’t create a subclass for a Kotlin class or override any methods from a base class — all classes and methods are `final`, by default.
