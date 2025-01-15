@@ -19,3 +19,4 @@ Study notes and examples for Kotlin from absolute beginner onwards.
 5. [Collections](05_collections.md)
 6. [Nullable](06_nullable.md)
 7. [Operator overloading](07_operator_overloading.md)
+8. [Generics](08_generics.md)

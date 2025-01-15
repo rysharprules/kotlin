@@ -36,7 +36,7 @@ such as `prefix` in the example above, is said to be _captured_ by the lambda.
 
 ## Member references
 **Syntax for member reference:**
-- On the left hand side is the class or _bound callabale reference_ `MyClass`
+- On the left hand side is the class or _bound callable reference_ `MyClass`
 - In the middle is the `::` operator
 - On the right hand side is the member function `::myFunction`
 
@@ -199,5 +199,149 @@ val fruits = buildSet {
 val medals = buildMap { // buildMap<String, Int> implied
     put("Gold", 1)
     putAll(listOf("Silver" to 2, "Bronze" to 3))
+}
+```
+
+## Higher order functions
+Lambdas as parameters and return values.
+
+### Syntax
+
+<img src=img/04_hof_syntax.png width=200 height=60>
+
+```kotlin
+var canReturnNull: (Int, Int) -> Int? = { x, y -> null }
+var funOrNull: ((Int, Int) -> Int)? = null
+```
+
+Note if you omit the parentheses, you’ll declare a function type with a nullable return type,
+and not a nullable variable of a function type.
+
+<img src=img/04_hof_syntax_nullable.png width=380 height=200>
+
+### Control flow
+If you use the return keyword in a lambda, it returns from the function in which you called the lambda, 
+not just from the lambda itself.
+```kotlin
+fun lookForAlice(people: List<Person>) {
+    people.forEach {
+        if (it.name == "Alice") {
+            println("Found!")
+            return
+        }
+    }
+    println("Alice is not found")
+}
+```
+
+You can label the lambda expression
+```kotlin
+fun lookForAlice(people: List<Person>) {
+    people.forEach label@{ 
+    if (it.name != "Alice") return@label 
+        print("Found Alice!")  
+    }
+}
+
+fun main() {
+    lookForAlice(people) // Found Alice!
+}
+```
+
+<img src=img/04_lambda_label.png width=370 height=130>
+
+The name of the function that takes this lambda as an argument can be used as a label.
+```kotlin
+fun lookForAlice(people: List<Person>) {
+    people.forEach {
+        if (it.name != "Alice") return@forEach 
+        print("Found Alice!")
+    }
+}
+```
+If you specify the label of a lambda with a receiver, you can access its implicit receiver using
+the corresponding labeled this expression
+```kotlin
+fun main() {
+    println(StringBuilder().apply sb@{
+        listOf(1, 2, 3).apply {
+            this@sb.append(this.toString())  
+        }
+    }) // [1, 2, 3]
+}
+```
+
+### Calling functions passed as arguments
+
+Declaration of a filter function, taking a predicate as a parameter:
+<img src=img/04_hof_calling.png width=400 height=180><br>
+The type of `predicate` is a function that takes a `Char` parameter and returns a `Boolean` result.
+
+```kotlin
+fun String.filter(predicate: (Char) -> Boolean): String {
+    return buildString {
+        for (char in this@filter) { 
+            // Calls the function passed as the argument for the predicate parameter
+            if (predicate(char)) append(char)  
+        }
+    }
+}
+fun main() {
+    // Passes a lambda as an argument for predicate
+    println("ab1c".filter { it in 'a'..'z' }) // abc
+}
+```
+
+**Examples**
+- Further [examples of calling functions passed as arguments](src/04/funcAsArg.kt)
+- [Parameters with function types can provide defaults or be nullable](src/04/funcAsArgDefaults.kt)
+- [Returning functions from functions](src/04/funcFromFunc.kt)
+- Another example of [returning functions from functions](src/04/funcFromFunc2.kt)
+- [Reducing duplication with lambdas](src/04/reducingDuplication.kt)
+
+## Inline functions
+Removes overhead of creating a function object every time you pass a lambda.
+
+When you declare a function as `inline`, its body is inlined — in other words, it’s substituted directly 
+into places where the function is called instead of being invoked normally.
+
+```kotlin
+import java.util.concurrent.locks.Lock
+import java.util.concurrent.locks.ReentrantLock
+
+// The body of a function marked as inline is substituted into places where the function is called.
+inline fun <T> synchronized(lock: Lock, action: () -> T): T {
+    lock.lock()
+    try {
+        return action()
+    }
+    finally {
+        lock.unlock()
+    }
+}
+```
+```kotlin
+fun foo(l: Lock) {
+    println("Before sync")
+    synchronized(l) {
+        println("Action")
+    }
+    println("After sync")
+}
+```
+The compiled version of the `foo` function:
+<img src=img/04_inline.png width=420 height=180>
+
+### Restrictions
+
+If the parameter is stored somewhere for further use, the code of the lambda expression can’t be inlined 
+because there must be an object that contains this code:
+```kotlin
+class FunctionStorage {
+    var myStoredFunction: ((Int) -> Unit)? = null
+    
+    inline fun storeFunction(f: (Int) -> Unit) {
+        myStoredFunction = f
+    }
 }
 ```
