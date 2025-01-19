@@ -20,3 +20,6 @@ Study notes and examples for Kotlin from absolute beginner onwards.
 6. [Nullable](06_nullable.md)
 7. [Operator overloading](07_operator_overloading.md)
 8. [Generics](08_generics.md)
+9. [Annotations](09_annotations.md)
+10. [Reflection](10_reflection.md)
+11. [Domain-Specific Languages (DSL)](11_dsl.md)
