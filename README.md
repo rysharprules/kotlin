@@ -22,4 +22,4 @@ Study notes and examples for Kotlin from absolute beginner onwards.
 8. [Generics](08_generics.md)
 9. [Annotations](09_annotations.md)
 10. [Reflection](10_reflection.md)
-11. [Domain-Specific Languages (DSL)](11_dsl.md)
+11. [Concurrency](11_concurrency.md)
