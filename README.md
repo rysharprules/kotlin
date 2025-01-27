@@ -23,3 +23,5 @@ Study notes and examples for Kotlin from absolute beginner onwards.
 9. [Annotations](09_annotations.md)
 10. [Reflection](10_reflection.md)
 11. [Concurrency](11_concurrency.md)
+12. [Flows](12_flows.md)
+13. [Exception Handling](13_exceptions.md)
