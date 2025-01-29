@@ -12,7 +12,7 @@ A way to access properties and methods of objects dynamically at run time, witho
   - It declares the `call` method, which allows 
   you to call the corresponding function or the getter of the property
 
-<img src=img/10_hierarchy.png width=600 height=340>
+<img src=../img/core/10/hierarchy.png width=600 height=340>
 
 ### `KClass`
 ```kotlin

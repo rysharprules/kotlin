@@ -83,7 +83,7 @@ val (number, name) = 1 to "one"
 
 This feature is called a destructuring declaration.
 
-<img src=img/02_infix.png width=250 height=240>
+<img src=../img/core/02/infix.png width=250 height=240>
 
 You create a pair using the `to` function and unpack it with a destructuring declaration.
 
@@ -118,7 +118,7 @@ fun main() {
 | `with`   | No receiver object (explicit receiver) | The last expression inside the block | Performing actions on an object, using its properties and methods without modifying it. See Conditonals in [01. Basics](01_basics.md) |
 
 **Examples**
-- [Scope functions](src/02/scopeFunctions.kt)
+- [Scope functions](../src/02/scopeFunctions.kt)
 
 ### Properties
 ```kotlin

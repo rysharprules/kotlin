@@ -2,7 +2,7 @@
 
 ## Syntax
 
-<img src=img/08_syntax.png width=390 height=100>
+<img src=../img/core/08/syntax.png width=390 height=100>
 
 ```kotlin
 fun main() {
@@ -40,7 +40,7 @@ In Java, you use the keyword extends to express the same concept:
 ```java
 <T extends Number> T sum(List<T> list)
 ```
-<img src=img/08_constraints.png width=390 height=100>
+<img src=../img/core/08/constraints.png width=390 height=100>
 
 In this case, the `sum` function is constrained to lists of a type whose upper bound is `Number`.
 
@@ -169,18 +169,18 @@ Variance refers to how subtyping relationships between generic types are propaga
 
 Covariants use the `in` position and contravariants use the `out` positions:
 
-<img src=img/08_variance.png width=300 height=140>
+<img src=../img/core/08/variance.png width=300 height=140>
 
-<img src=img/08_variance2.png width=460 height=140>
+<img src=../img/core/08/variance2.png width=460 height=140>
 
 ### Subtypes
-<img src=img/08_subtypes.png width=400 height=100> 
+<img src=../img/core/08/subtypes.png width=400 height=100> 
 
 `B` is a subtype of `A` if you can use it when `A` is expected. Since you can use an `Int` where a `Number` is expected, 
 it is a subtype. Likewise, you can use an `Int` where an `Int` is expected; it is also a subtype of itself. Because you 
 can’t use an `Int` where a `String` is expected, it can’t be considered a subtype.
 
-<img src=img/08_null_subtypes.png width=300 height=100>
+<img src=../img/core/08/null_subtypes.png width=300 height=100>
 
 A non-null type `A` is a subtype of nullable `A?`, but not vice versa: you can use an `Int` where an `Int?` is expected, but you
 can’t use an `Int?` where an `Int` is expected.

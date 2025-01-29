@@ -11,10 +11,10 @@ The `init` keyword introduces an initializer block, executed when the class is c
 and are intended to be used together with primary constructors
 
 **Examples**
-- [Primary constructor and init block](src/03/constructors/init.kt)
-- [Superclasses with and without arguments](src/03/constructors/superclass.kt)
-- [Private constructor](src/03/constructors/private.kt)
-- [Constructor with arguments with default values](src/03/constructors/defaultArgumentValues.kt)
+- [Primary constructor and init block](../src/03/constructors/init.kt)
+- [Superclasses with and without arguments](../src/03/constructors/superclass.kt)
+- [Private constructor](../src/03/constructors/private.kt)
+- [Constructor with arguments with default values](../src/03/constructors/defaultArgumentValues.kt)
 
 ### Secondary (multiple) constructors
 
@@ -28,11 +28,11 @@ base class or delegate to another constructor that does so. Thinking in terms of
 below, each secondary constructor must have an outgoing arrow starting a path that ends at 
 any constructor of the base class. 
 
-This is demonstrated in the [Example code](src/03/constructors/secondary.kt).
+This is demonstrated in the [Example code](../src/03/constructors/secondary.kt).
 
-<img src=img/03_secondary_constructor_super.png width="600" height="180">
+<img src=../img/core/03/secondary_constructor_super.png width="600" height="180">
 
-<img src=img/03_secondary_constructor_this.png width="600" height="180">
+<img src=../img/core/03/secondary_constructor_this.png width="600" height="180">
 
 ## Interfaces
 
@@ -53,8 +53,8 @@ fun main() {
 ```
 
 **Examples**
-- [Basic interface](src/03/interfaces/basic.kt)
-- [Explicit implementations](src/03/interfaces/explicitImplementations.kt)
+- [Basic interface](../src/03/interfaces/basic.kt)
+- [Explicit implementations](../src/03/interfaces/explicitImplementations.kt)
 
 ### Default implementation
 
@@ -68,7 +68,7 @@ If you implement this interface, you are forced to provide an implementation
 for `click`. You can redefine the behavior of the `showOff` method or use the default behaviour.
 
 **Examples**
-- [Default implementation](src/03/interfaces/defaultImplementations.kt)
+- [Default implementation](../src/03/interfaces/defaultImplementations.kt)
 
 ### Properties declared in interfaces
 
@@ -84,7 +84,7 @@ Classes implementing the `User` interface above need to provide a way to obtain 
 `nickname`. 
 
 The interface doesn’t specify whether the value should be stored in a backing field or obtained through a getter.
-See [examples of interface properties overridden](src/03/interfaces/properties.kt).
+See [examples of interface properties overridden](../src/03/interfaces/properties.kt).
 
 The interface _can_ contain properties with getters and setters, as long as they don't reference a backing field.
 
@@ -120,15 +120,15 @@ class Customer(val name: String, val postalCode: Int) {
 }
 ```
 **Examples**
-- [Overriding generated methods](src/03/dto.kt)
-- [The copy method](src/03/copy.kt) - a method that allows you to copy the instances of your classes, changing the values of some properties
+- [Overriding generated methods](../src/03/dto.kt)
+- [The copy method](../src/03/copy.kt) - a method that allows you to copy the instances of your classes, changing the values of some properties
 
 ### `==` and `equals`
 
 The comparison `a == b` checks whether `a` isn’t null , and if it’s not, calls `a.equals(b)`- otherwise, the result is true only if both arguments are null
 references.
 
-<img src=img/03_equals.png width="390" height="30">
+<img src=../img/core/03/equals.png width="390" height="30">
 
 ## Open and abstract classes
 
@@ -237,7 +237,7 @@ fun eval(e: Expr): Int =
     }
 ```
 
-The same rules apply for interfaces. [Example sealed interface](src/03/interfaces/sealed.kt)
+The same rules apply for interfaces. [Example sealed interface](../src/03/interfaces/sealed.kt)
 
 ## Class delegation
 
@@ -264,7 +264,7 @@ class DelegatingCollection<T>(
 ```
 
 When you need to change the behavior of some methods, you can override them, and your code will be called 
-instead of the generated methods. [See example](src/03/by.kt)
+instead of the generated methods. [See example](../src/03/by.kt)
 
 ## Objects
 
@@ -289,14 +289,14 @@ fun main() {
 }
 ```
 Examples:
-- [Object in a class](src/03/objects/objectInClass.kt)
-- [Comparator example](src/03/objects/comparator.kt)
-- [Comparator in a class](src/03/objects/comparatorInClass.kt)
+- [Object in a class](../src/03/objects/objectInClass.kt)
+- [Comparator example](../src/03/objects/comparator.kt)
+- [Comparator in a class](../src/03/objects/comparatorInClass.kt)
 
 ### Companion objects
 
 Similar to `static` members in Java, but they can also implement interfaces. 
 
 Examples:
-- [Basic companion object](src/03/objects/companion.kt)
-- [Companion object used for factory pattern](src/03/objects/companionFactory.kt)
+- [Basic companion object](../src/03/objects/companion.kt)
+- [Companion object used for factory pattern](../src/03/objects/companionFactory.kt)

@@ -5,7 +5,7 @@ See [Basics](01_basics.md) for creating and accessing collections.
 But every Java
 collection interface has two representations in Kotlin: a read-only one and a mutable one.
 
-<img src=img/05_collection_hierarchy.png width=500 height=320>
+<img src=../img/core/05/collection_hierarchy.png width=500 height=320>
 
 `Map` class (which doesn’t extend `Collection` or `Iterable`) is also represented in Kotlin as two 
 distinct versions: `Map` and `MutableMap`.
@@ -33,15 +33,15 @@ fun main() {
     println(nameToAge["Joe"]) // 22
 }
 ```
-<img src=img/05_associate.png width=475 height=360>
+<img src=../img/core/05/associate.png width=475 height=360>
 
 `associateWith` uses the original elements of your collection as keys. The
 lambda you provide generates the corresponding value for each key. On the
 other hand, `associateBy` uses the original elements of your collection as
 values and uses your lambda to generate the keys of the map.
 
-[associate example](src/05/associate.kt)
-[associateWith and associateBy examples](src/05/associateWithBy.kt)
+[associate example](../src/05/associate.kt)
+[associateWith and associateBy examples](../src/05/associateWithBy.kt)
 
 ### `all`, `any`, `none`, `count` and `find`
 These can be applied as predicates to collections.
@@ -110,7 +110,7 @@ fun main() {
     println(temperatures.chunked(2) { it.sum() }) // [57.5, 57.5, 19.1]
 }
 ```
-<img src=img/05_chunked.png width=475 height=360>
+<img src=../img/core/05/chunked.png width=475 height=360>
 
 Note the final chunk may be smaller than the specified size if the list is out of elements.
 
@@ -123,7 +123,7 @@ fun main() {
     println(temperatures.windowed(3) { it.sum() / it.size }) // [26.5, 29.099999999999998, 25.53333333333333]
 }
 ```
-<img src=img/05_windowed.png width=500 height=400>
+<img src=../img/core/05/windowed.png width=500 height=400>
 
 ### `fold`
 
@@ -132,8 +132,8 @@ Similar to `reduce`, but with an initial value for the accumulator.
 In cases where you want to retrieve all intermittent values of the `fold` operations you 
 can use `runningFold`.
 
-[Examples](src/05/fold.kt)
-[runningFold](src/05/runningFold.kt)
+[Examples](../src/05/fold.kt)
+[runningFold](../src/05/runningFold.kt)
 
 ### `filter`
 The result is a new collection that contains only the elements from the input
@@ -148,13 +148,13 @@ You can invert with `filterNot`.
 
 This can be applied to Maps with `filterKeys` and `filterValues`.
 
-[Examples](src/05/filter.kt)
+[Examples](../src/05/filter.kt)
 
 ### `filterIndexed` and `mapIndexed`
 
 Filter collections with the index of the element.
 
-[Examples](src/05/indexed.kt)
+[Examples](../src/05/indexed.kt)
 
 ### `flatMap` and `flatten`
 `flatMap` does two things: 
@@ -164,7 +164,7 @@ Filter collections with the index of the element.
 If you don’t need to transform anything and just need to flatten such a collection of collections, you can use the `flatten` function:
 `listOfLists.flatten()`
 
-[Examples](src/05/flat.kt)
+[Examples](../src/05/flat.kt)
 
 ### `groupBy`
 Create a `Map`, grouping the elements by a key determined by the lambda.
@@ -196,13 +196,13 @@ fun main() {
 }
 ```
 
-[Examples](src/05/map.kt)
+[Examples](../src/05/map.kt)
 
 ### `maxByOrNull`
 
 Get the maximum element of a collection by a selector function. 
 
-[Examples](src/05/maxByOrNull.kt)
+[Examples](../src/05/maxByOrNull.kt)
 
 Calls can be chained:
 ```kotlin
@@ -225,7 +225,7 @@ val (comeIn, stayOut) = people.partition(canBeInClub27)
 println(comeIn) // [Person(name=Alice, age=26)]
 println(stayOut) // [Person(name=Bob, age=29), Person(name=Carol, age=31)]
 ````
-[More code with partition](src/05/partition.kt)
+[More code with partition](../src/05/partition.kt)
 
 ### `reduce`
 
@@ -242,8 +242,8 @@ fun main() {
 In cases where you want to retrieve all intermittent values of the `reduce` operations you
 can use `runningReduce`.
 
-[More examples of reduce](src/05/reduce.kt)
-[runningReduce](src/05/runningReduce.kt)
+[More examples of reduce](../src/05/reduce.kt)
+[runningReduce](../src/05/runningReduce.kt)
 
 ### `replaceAll` and `fill`
 When applied to a `MutableList`, the `replaceAll` function replaces each element in the list with a 
@@ -252,7 +252,7 @@ result from the lambda.
 For the special case of replacing all elements in the mutable list with the same value, you can
 use the fill function as a shorthand.
 
-[Examples](src/05/replaceAll.kt)
+[Examples](../src/05/replaceAll.kt)
 
 ### `zip`
 You can use the `zip` function to create a list of pairs from values at the same index from
@@ -269,11 +269,11 @@ fun main() {
     // [Person(name=Joe, age=22), Person(name=Mary, age=31), Person(name=Jamie, age=31)]
 }
 ```
-<img src=img/05_zip.png width=475 height=550>
+<img src=../img/core/05/zip.png width=475 height=550>
 
 Values that don’t have a counterpart in the other collection are ignored by zip.
 
-[Examples](src/05/zip.kt)
+[Examples](../src/05/zip.kt)
 
 ## Sequences
 Sequences allow for lazy operations on collections. They are similar to Java Streams as they are not run
@@ -303,7 +303,7 @@ fun main() {
 ```
 Eager evaluation runs each operation on the entire collection; lazy evaluation processes elements one by one.
 
-<img src=img/05_sequence.png width=375 height=260>
+<img src=../img/core/05/sequence.png width=375 height=260>
 
 ### Generating sequences
 `generateSequence` calculates the next element in a sequence, given the previous one.

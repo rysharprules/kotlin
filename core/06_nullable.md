@@ -53,7 +53,7 @@ str?.uppercase() // the result of .uppercase() is String, but the result of str?
 // the above is equivalent to the following
 if (str != null) str.uppercase() else null
 ```
-<img src=img/06_safecall_operator.png width=590 height=200>
+<img src=../img/core/06/safecall_operator.png width=590 height=200>
 
 ## Elvis operator `?:`
 ```kotlin
@@ -63,11 +63,11 @@ fun greet(name: String?) {
     println("Hello, $recipient!")
 }
 ```
-<img src=img/06_elvis_operator.png width=590 height=200>
+<img src=../img/core/06/elvis_operator.png width=590 height=200>
 
 Elvis operator returns an expression which includes `return` and `throw`. 
 
-[Elvis examples](src/06/elvis.kt)
+[Elvis examples](../src/06/elvis.kt)
 
 ## Safe casting operator `as?`
 ```kotlin
@@ -79,7 +79,7 @@ class Person(val firstName: String, val lastName: String) {
 ```
 [Full example here](src/06/safe_casting.kt)
 
-<img src=img/06_safecast_as.png width=590 height=200>
+<img src=../img/core/06/safecast_as.png width=590 height=200>
 
 ## Not-null assertion operator `!!`
 You don’t have to explicitly handle `null`
@@ -101,9 +101,9 @@ email?.let { email -> sendEmailTo(email) }
 // or even shorter using it
 email?.let { sendEmailTo(it) }
 ```
-[Full example here](src/06/let.kt)
+[Full example here](../src/06/let.kt)
 
-<img src=img/06_let.png width=590 height=200>
+<img src=../img/core/06/let.png width=590 height=200>
 
 ## `lateinit`
 Declare a property of a non-null type without an initializer, i.e. initilize it later.
@@ -118,9 +118,9 @@ class MyTest {
         assertEquals("Action Done!", myService.performAction())
     }
 ```
-[Full example here](src/06/lateinit.kt)
+[Full example here](../src/06/lateinit.kt)
 
-<img src=img/06_lateinit.png width=590 height=200>
+<img src=../img/core/06/lateinit.png width=590 height=200>
 
 ## Extensions for nullable types
 Defining extension functions for nullable types is one more powerful way to deal with `null` values. 
@@ -143,7 +143,7 @@ fun main() {
     verifyUserInput(null) // Please fill in the required fields
 }
 ```
-<img src=img/06_extension_nullable.png width=260 height=135>
+<img src=../img/core/06/extension_nullable.png width=260 height=135>
 
 This is only possible for extension functions; regular member calls are dispatched through the object 
 instance and, therefore, can never be performed when the instance is `null`.
@@ -151,6 +151,6 @@ instance and, therefore, can never be performed when the instance is `null`.
 ## Collections and nullable types
 A collection and/or the elements themselves can be nullable. 
 
-<img src=/img/06_nullable_collection1.png width=450 height=200>
+<img src=/img/core/06/nullable_collection1.png width=450 height=200>
 
-<img src=/img/06_nullable_collection2.png width=225 height=200>
+<img src=/img/core/06/nullable_collection2.png width=225 height=200>

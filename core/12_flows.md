@@ -44,6 +44,9 @@ actually being consumed, operating in a broadcast fashion.
 | Completion Status                            | Potentially completes                | Doesn’t complete                       |
 | Emission Source                              | Emissions happen from a single coroutine (unless channelFlow is used) | Emissions can happen from arbitrary coroutines |
 
+Intermediate and terminal operators can transform flows:
+
+<img src=../img/core/12/operators.png width=600 height=300>
 
 ## Cold flows
 
@@ -90,7 +93,7 @@ fun main() = runBlocking {
 The first emission in the flow builder means the lambda associated with the collector is invoked.
 These operations all run on the same coroutine.
 
-<img src=img/12_cold.png width=400 height=350>
+<img src=../img/core/12/cold.png width=400 height=350>
 
 Calling collect on a cold flow multiple times also triggers the execution of its code multiple times.
 ```kotlin
@@ -168,7 +171,7 @@ fun main() = runBlocking {
 ```
 Collecting this flow takes a little over 5 seconds because each `getRandomNumber` invocation is executed one after the other - entirely sequentially.
 
-<img src=img/12_channel1.png width=640 height=100>
+<img src=../img/core/12/channel1.png width=640 height=100>
 
 ```kotlin
 import kotlinx.coroutines.flow.channelFlow
@@ -190,7 +193,7 @@ val randomNumbers = channelFlow { // Creates a new channel flow
 
 Now using a channel flow, `getRandomNumber` gets executed concurrently.
 
-<img src=img/12_channel2.png width=400 height=290>
+<img src=../img/core/12/channel2.png width=400 height=290>
 
 ## Hot flows
 
@@ -203,7 +206,7 @@ Two hot flow implementations:
 
 Shared flows operate in a broadcast fashion—independently of whether a subscriber (a collector of a shared flow) is present.
 
-<img src=img/12_shared.png width=400 height=290>
+<img src=../img/core/12/shared.png width=400 height=290>
 
 ```kotlin
 import kotlinx.coroutines.*
@@ -350,7 +353,7 @@ fun main() = runBlocking {
 // 445 [main @coroutine#2] Direction now LEFT
 ```
 
-<img src=img/12_state.png width=400 height=400>
+<img src=../img/core/12/state.png width=400 height=400>
 
 State flows perform _equality-based conflation_. When the value is assigned the same value as is already set, no new elements are emitted.
 

@@ -12,8 +12,8 @@
 - Functions can return `Nothing`. It has no value. It is used to indicate that the function never returns normally.
 
 **Examples**
-- [hello world](src/01/helloworld.kt) :)
-- [Reading input](src/01/input.kt)
+- [hello world](../src/01/helloworld.kt) :)
+- [Reading input](../src/01/input.kt)
 
 ## Functions
 
@@ -101,7 +101,7 @@ val kotlinLogo =
 You don’t have to escape `\`, so the Windows-style path `C:\\Users\\yole\\kotlin-book` can be written as `"""C:\Users\yole\kotlin-book"""`
 
 ### `isBlank`
-Checks if a String consists only of whitespace characters. See [examples](src/01/isBlank.kt).
+Checks if a String consists only of whitespace characters. See [examples](../src/01/isBlank.kt).
 
 ## Unsigned number types
 Unsigned number types “shift” the value range compared to their signed counterparts, allowing you to 
@@ -113,7 +113,7 @@ store larger non-negative numbers in the same amount of memory.
 | UShort | 16 bit  | 0 - 65535          |
 | UInt   | 32 bit  | 0 - 2^32 - 1       |
 | ULong  | 64 bit  | 0 - 2^64 - 1       |
-<img src=img/01_ubyte.png width=600 height=170>
+<img src=../img/core/01/ubyte.png width=600 height=170>
 
 ## Arrays
 
@@ -183,9 +183,9 @@ enum class Color {
 ```
 
 **Examples**
-- [Enum with properties](src/01/enums/withProperties.kt)
-- [Looping enum with when](src/01/enums/looping.kt)
-- [Looping enum with when with multiple values in the same branch](src/01/enums/loopingCombined.kt)
+- [Enum with properties](../src/01/enums/withProperties.kt)
+- [Looping enum with when](../src/01/enums/looping.kt)
+- [Looping enum with when with multiple values in the same branch](../src/01/enums/loopingCombined.kt)
 
 ## Classes
 
@@ -443,8 +443,8 @@ if (x in 1..y+1) {
 ```
 
 **Examples**
-- [Fizzbuzz](src/01/range/fizzbuzz.kt)
-- [Validation with ranges](src/01/range/validation.kt) including characters `in 'a'..'z' and opposites with `!in`
+- [Fizzbuzz](../src/01/range/fizzbuzz.kt)
+- [Validation with ranges](../src/01/range/validation.kt) including characters `in 'a'..'z' and opposites with `!in`
 
 ## Collections
 Kotlin has `List`s, `Set`s, and `Map`s.
@@ -569,7 +569,7 @@ println(rangeSet) // Output: [1, 2, 3, 4, 5]
 ```
 
 **Examples**
-- [Map](src/01/collections/map.kt)
+- [Map](../src/01/collections/map.kt)
 
 ## Null
 A reference must be explicitly marked as nullable when null value is possible with `?`
@@ -609,4 +609,4 @@ if (obj is String) {
 ```
 
 **Examples**
-- [Sum operation with smart casts](src/01/smartcast/sumOperation.kt)
+- [Sum operation with smart casts](../src/01/smartcast/sumOperation.kt)

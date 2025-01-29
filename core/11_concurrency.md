@@ -12,7 +12,7 @@ that is non-blocking.
 
 Where a single process may have thousands of threads, you can run millions of concurrent tasks using coroutines.
 
-<img src=img/11_coroutines.png width=600 height=210>
+<img src=../img/core/11/coroutines.png width=600 height=210>
 
 ### Pausing functions with `suspend`
 
@@ -80,7 +80,7 @@ fun main() = runBlocking {
 // 47 [main @coroutine#3] The third coroutine can run in the meantime
 // 149 [main @coroutine#2] The second coroutine is resumed
 ```
-<img src=img/11_launch.png width=600 height=200>
+<img src=../img/core/11/launch.png width=600 height=200>
 
 ```kotlin
 suspend fun slowlyAddNumbers(a: Int, b: Int): Int {
@@ -124,7 +124,7 @@ Coroutines inherit their dispatcher from their parent by default.
 | `Dispatchers.Unconfined` | - ("Whatever thread")                               | Advanced cases where immediate scheduling is required (non-general-purpose) |
 | `limitedParallelism(n)`  | Custom (n)                                          | Custom scenarios                                                |
 
-<img src=img/11_dispatcher.png width=600 height=400>
+<img src=../img/core/11/dispatcher.png width=600 height=400>
 
 ```kotlin
 fun main() {
@@ -179,7 +179,7 @@ fun main() {
 Coroutines exist in a hierarchy. Each coroutine knows its children or parents. `runBlocking` can wait for 
 the completion of all its children before returning.
 
-<img src=img/11_scope.png width=500 height=300>
+<img src=../img/core/11/scope.png width=500 height=300>
 
 ```kotlin
 import kotlinx.coroutines.*
@@ -245,7 +245,7 @@ Using `withTimoutOrNull` constrains the execution time of a suspending function.
 returns a value within the given timeout, that value is returned immediately. When the timeout expires, 
 the function is cancelled, and `null` is returned.
 
-<img src=img/11_cancel.png width=500 height=290>
+<img src=../img/core/11/cancel.png width=500 height=290>
 
 Triggering the cancellation of the outermost launched coroutine properly cancels even the great-grandchild coroutine:
 ```kotlin
@@ -342,7 +342,7 @@ fun main() {
 | ensureActive      | Introduces “cancellation point”—throws `CancellationException` upon cancellation, instantly stopping work |
 | yield()           | Relinquishes computation resources, preventing CPU-heavy computations from exhausting the underlying thread (pool) |
 
-<img src=img/11_yield.png width=600 height=210>
+<img src=../img/core/11/yield.png width=600 height=210>
 
 Without suspension points, multiple coroutines will always run to completion and (on a single-threaded 
 dispatcher) without interleaving. Checking isActive or calling ensureActive allows the coroutines to

@@ -12,7 +12,7 @@
 
 ### `plus`
 
-<img src=img/07_plus.png width=240 height=30>
+<img src=../img/core/07/plus.png width=240 height=30>
 
 ```kotlin
 data class Point(val x: Int, val y: Int) {
@@ -85,7 +85,7 @@ to the next selector function, or returns `0` if there are no more functions to 
 
 ### Accessing elements by index: The `get` and `set` conventions
 
-<img src=img/07_compare.png width=280 height=31>
+<img src=../img/core/07/compare.png width=280 height=31>
 
 You can access the elements in a map similarly to how you access arrays in Java—via square brackets:
 `val value = map[key]`.
@@ -98,34 +98,34 @@ method, and writing an element becomes a call to `set`. The methods defined for 
 `MutableMap` interfaces.
 
 **Examples:**
-- [Add get operator to custom Point class](src/07/get.kt).
-- [Add set operator to custom mutable Point class](src/07/set.kt).
+- [Add get operator to custom Point class](../src/07/get.kt).
+- [Add set operator to custom mutable Point class](../src/07/set.kt).
 
 ### Checking whether an object belongs to a collection: The `in` convention
 
-<img src=img/07_contains.png width=240 height=30>
+<img src=../img/core/07/contains.png width=240 height=30>
 
 The `in` operator is used to check whether an object belongs to a collection. The corresponding function
 is called `contains`.
 
-[Example of in operator in custom Rectangle class](src/07/in.kt).
+[Example of in operator in custom Rectangle class](../src/07/in.kt).
 
 ### Creating ranges from objects: The `rangeTo` and `rangeUntil` conventions
 The `..` operator is transformed into a `rangeTo` function call.
 
 The `rangeTo` function returns a range and is available for any `Comparable` type.
 
-<img src=img/07_range.png width=250 height=35>
+<img src=../img/core/07/range.png width=250 height=35>
 
 The `rangeUntil` operator (`..<`) returns an open-end range, which doesn’t include the specified 
 upper bound.
 
-[Examples of .. and ..< operators](src/07/rangeTo.kt).
+[Examples of .. and ..< operators](../src/07/rangeTo.kt).
 
 ## Destructuring declarations
 Get multiple values from an object using destructuring declarations.
 
-<img src=img/07_deconstructing.png width=450 height=50>
+<img src=../img/core/07/deconstructing.png width=450 height=50>
 
 ```kotlin
 fun main() {
@@ -139,9 +139,9 @@ fun main() {
 If you wish to ignore a value, convention is to use an underscore `_`.
 
 **Examples:**
-- Full [example of deconstructing the Point class](src/07/deconstructing/deconstructing.kt)
-- [Splitting a file name](src/07/deconstructing/splitFilename.kt)
-- [Destructuring declaration in a loop](src/07/deconstructing/loops.kt)
+- Full [example of deconstructing the Point class](../src/07/deconstructing/deconstructing.kt)
+- [Splitting a file name](../src/07/deconstructing/splitFilename.kt)
+- [Destructuring declaration in a loop](../src/07/deconstructing/loops.kt)
 
 ## Delegated properties: `by` and `lazy`
 Lazy initialization is a common pattern that entails creating part of an object on

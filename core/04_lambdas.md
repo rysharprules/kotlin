@@ -29,7 +29,7 @@ val sum = { x: Int, y: Int -> x + y }
 ## Scope
 Lambdas can access variables defined in the surrounding scope — all the way up to the surrounding class and file scopes.
 
-<img src=img/04_lambda_scope.png width=490 height=210>
+<img src=../img/core/04/lambda_scope.png width=490 height=210>
 
 Kotlin allows you to access (and modify) non-final variables in a lambda. External variables accessed from a lambda, 
 such as `prefix` in the example above, is said to be _captured_ by the lambda.
@@ -207,7 +207,7 @@ Lambdas as parameters and return values.
 
 ### Syntax
 
-<img src=img/04_hof_syntax.png width=200 height=60>
+<img src=../img/core/04/hof_syntax.png width=200 height=60>
 
 ```kotlin
 var canReturnNull: (Int, Int) -> Int? = { x, y -> null }
@@ -217,7 +217,7 @@ var funOrNull: ((Int, Int) -> Int)? = null
 Note if you omit the parentheses, you’ll declare a function type with a nullable return type,
 and not a nullable variable of a function type.
 
-<img src=img/04_hof_syntax_nullable.png width=380 height=200>
+<img src=../img/core/04/hof_syntax_nullable.png width=380 height=200>
 
 ### Control flow
 If you use the return keyword in a lambda, it returns from the function in which you called the lambda, 
@@ -248,7 +248,7 @@ fun main() {
 }
 ```
 
-<img src=img/04_lambda_label.png width=370 height=130>
+<img src=../img/core/04/lambda_label.png width=370 height=130>
 
 The name of the function that takes this lambda as an argument can be used as a label.
 ```kotlin
@@ -293,11 +293,11 @@ fun main() {
 ```
 
 **Examples**
-- Further [examples of calling functions passed as arguments](src/04/funcAsArg.kt)
-- [Parameters with function types can provide defaults or be nullable](src/04/funcAsArgDefaults.kt)
-- [Returning functions from functions](src/04/funcFromFunc.kt)
-- Another example of [returning functions from functions](src/04/funcFromFunc2.kt)
-- [Reducing duplication with lambdas](src/04/reducingDuplication.kt)
+- Further [examples of calling functions passed as arguments](../src/04/funcAsArg.kt)
+- [Parameters with function types can provide defaults or be nullable](../src/04/funcAsArgDefaults.kt)
+- [Returning functions from functions](../src/04/funcFromFunc.kt)
+- Another example of [returning functions from functions](../src/04/funcFromFunc2.kt)
+- [Reducing duplication with lambdas](../src/04/reducingDuplication.kt)
 
 ## Inline functions
 Removes overhead of creating a function object every time you pass a lambda.

@@ -24,7 +24,7 @@ fun remove(index: Int) { /* ... */ }
 The use-site target (like `get` or `set`) is placed between the @ sign and the annotation name, and is separated 
 from the name with a colon.
 
-<img src=img/09_usesite.png width=380 height=110>
+<img src=../img/core/09/usesite.png width=380 height=110>
 
 Here, you use it to make the calculate function callable from Java code via `performCalculation()`:
 ```kotlin
@@ -78,7 +78,7 @@ data class Person(
 )
 ```
 
-<img src=img/09_json_ser.png width=380 height=110>
+<img src=../img/core/09/json_ser.png width=380 height=110>
 
 ## Creating annotations
 
