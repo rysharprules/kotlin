@@ -374,3 +374,231 @@ fun main() {
     }
 }
 ```
+
+## Flow operators
+
+The terms _upstream_ and _downstream_ describe where an intermediate operator sits in the 
+operator chain in relation to another operator.
+
+<img src=../img/core/12/updownstream.png width=600 height=290>
+
+### `buffer`
+Decouples the execution of the upstream flow from the downstream flow.
+
+Consider:
+```kotlin
+fun getAllUserIds(): Flow<Int> {
+    return flow {
+        repeat(3) {
+            delay(200.milliseconds) // Database latency
+            log("Emitting!")
+            emit(it)
+        }
+    }
+}
+suspend fun getProfileFromNetwork(id: Int): String {
+    delay(2.seconds) // Network latency
+    return "Profile[$id]"
+}
+```
+Without buffering, the flow is executed sequentially (the producer of values suspends its 
+work until the collector has finished processing the previous element).
+```kotlin
+fun main() {
+    val ids = getAllUserIds()
+    runBlocking {
+        ids
+            .map { getProfileFromNetwork(it) }
+            .collect { log("Got $it") }
+    }
+}
+// 310 [main @coroutine#1] Emitting!
+// 2402 [main @coroutine#1] Got Profile[0]
+// 2661 [main @coroutine#1] Emitting!
+// 4732 [main @coroutine#1] Got Profile[1]
+// 5007 [main @coroutine#1] Emitting!
+// 7048 [main @coroutine#1] Got Profile[2]
+```
+With buffering, the flow is executed concurrently. The flow returned by `getAllUserIds` can 
+keep emitting items into the buffer while the collector is working:
+```kotlin
+fun main() {
+    val ids = getAllUserIds()
+    runBlocking {
+        ids
+            .buffer(3)
+            .map { getProfileFromNetwork(it) }
+            .collect { log("Got $it") }
+    }
+}
+// 304 [main @coroutine#2] Emitting!
+// 525 [main @coroutine#2] Emitting!
+// 796 [main @coroutine#2] Emitting!
+// 2373 [main @coroutine#1] Got Profile[0]
+// 4388 [main @coroutine#1] Got Profile[1]
+// 6461 [main @coroutine#1] Got Profile[2]
+```
+
+### `conflate`
+Conflation can help a slow collector keep up by processing only the latest elements in the 
+flow. 
+
+```kotlin
+runBlocking {
+    val temps = getTemperatures()
+    temps
+        .onEach {
+            log("Read $it from sensor")
+        }
+        .conflate()
+        .collect {
+            log("Collected $it")
+            delay(1.seconds)
+        }
+}
+// 43 [main @coroutine#2] Read 20 from sensor
+// 51 [main @coroutine#1] Collected 20
+// 558 [main @coroutine#2] Read -10 from sensor
+// 1078 [main @coroutine#2] Read 3 from sensor
+// 1294 [main @coroutine#1] Collected 3
+// 1579 [main @coroutine#2] Read 13 from sensor
+// 2153 [main @coroutine#2] Read 26 from sensor
+// 2556 [main @coroutine#1] Collected 26
+```
+
+Similar to `buffer`, using `conflate` decouples the execution of the upstream flow from the 
+execution of any downstream operators.
+
+### `debounce`
+It only emits items into the downstream flow once a certain timeout has elapsed when the
+upstream hasn’t emitted any items.
+```kotlin
+fun main() = runBlocking {
+    searchQuery
+        .debounce(250.milliseconds)
+        .collect {
+            log("Searching for $it")
+        }
+}
+// 644 [main @coroutine#1] Searching for Kotl
+// 876 [main @coroutine#1] Searching for Kotlin
+```
+
+### `flowOf`
+If your initial flow simply emits a list of values.
+```kotlin
+val names = flowOf("Jo", "May", "Sue")
+```
+
+### `flowOn`
+If you want some parts of your processing pipeline to run on a different dispatcher, or 
+with a different coroutine context.
+```kotlin
+runBlocking {
+    flowOf(1)
+        .onEach { log("A") }
+        .flowOn(Dispatchers.Default)
+        .onEach { log("B") }
+        .flowOn(Dispatchers.IO)
+        .onEach { log("C") }
+        .collect()
+}
+// 36 [DefaultDispatcher-worker-3 @coroutine#3] A
+// 44 [DefaultDispatcher-worker-1 @coroutine#2] B
+// 44 [main @coroutine#1] C
+```
+
+### `onCompletion`, `onEach`, `onStart`
+The `onCompletion` operator provides a lambda that gets executed after the flow terminates
+(regularly, cancelled, or with an exception).
+```kotlin
+fun main() = runBlocking {
+    val temps = getTemperatures()
+    temps
+        .take(5)
+        .onCompletion { 
+            cause ->
+                if (cause != null) {
+                    println("An error occurred! $cause")
+                } else {
+                    println("Completed!")
+                }
+        }
+        .collect {
+            println(it)
+        }
+}
+```
+`onStart` is executed when the collection of the flow begins.
+
+`onEach` performs an action on each emitted element of the upstream flow.
+
+```kotlin
+flow
+    .onEmpty {
+        println("Nothing - emitting default value!")
+        emit(0)
+    }
+    .onStart {
+        println("Starting!")
+    }
+    .onEach {
+        println("On $it!")
+    }
+    .onCompletion {
+        println("Done!")
+    }
+    .collect()
+
+fun main() {
+    runBlocking {
+        process(flowOf(1, 2, 3))
+        // Starting!
+        // On 1!
+        // On 2!
+        // On 3!
+        // Done!
+        process(flowOf())
+        // Starting!
+        // Nothing - emitting default value!
+        // On 0!
+        // Done!
+    }
+}
+```
+
+### `take`
+The upstream flow can be cancelled after a number of emissions.
+```kotlin
+val temps = getTemperatures()
+temps
+    .take(5) // Cancels the flow after five emissions
+    .collect {
+        log(it)
+    }
+// 37 [main @coroutine#1] 7
+// 568 [main @coroutine#1] 9
+// 1123 [main @coroutine#1] 2
+// 1640 [main @coroutine#1] -6
+// 2148 [main @coroutine#1] 7
+```
+
+### `transform`
+In the situation where you want to emit more than one element.
+```kotlin
+import kotlinx.coroutines.flow.*
+fun main() {
+    val names = flow {
+        emit("Jo")
+        emit("May")
+        emit("Sue")
+    }
+    val upperAndLowercasedNames = names.transform {
+        emit(it.uppercase())
+        emit(it.lowercase())
+    }
+    runBlocking {
+        upperAndLowercasedNames.collect { print("$it ")}
+    } // JO jo MAY may SUE sue
+}
+```
