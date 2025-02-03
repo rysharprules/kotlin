@@ -1,5 +1,108 @@
 # Exception Handling
 
+## try-catch-finally
+```kotlin
+try {
+    // Code that may throw an exception
+} catch (e: SomeException) {
+    // Code for handling the exception
+} finally {
+    // Code that is always executed
+}
+```
+
+### try-catch expression
+```kotlin
+fun main() {
+    val num: Int = try {
+        count() // If count() completes successfully, its return value is assigned to num
+    } catch (e: ArithmeticException) {
+        -1 // If count() throws an exception, the catch block returns -1, which is assigned to num
+    }
+    println("Result: $num")
+}
+
+fun count(): Int {
+    return 10 / 0
+}
+// Result: -1
+```
+
+## Precondition functions
+
+| Function  | Use Case                                  | Exception Thrown                                                                                              |
+|-----------|------------------------------------------|---------------------------------------------------------------------------------------------------------------|
+| `require()` | Checks user input validity              | [IllegalArgumentException](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-illegal-argument-exception/) |
+| `check()`  | Checks object or variable state validity | [IllegalStateException](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-illegal-state-exception/)       |
+| `error()`  | Indicates an illegal state or condition | [IllegalStateException](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-illegal-state-exception/)       |
+
+### `check`
+Validate the state of an object or variable.
+```kotlin
+fun main() {
+    var someState: String? = null
+
+    fun getStateValue(): String {
+        val state = checkNotNull(someState) { "State must be set beforehand!" }
+        check(state.isNotEmpty()) { "State must be non-empty!" }
+        return state
+    }
+    someState = ""
+    getStateValue() 
+}
+// Exception in thread "main" java.lang.IllegalStateException: State must be non-empty!
+// at FileKt.main$getStateValue (File.kt:7)
+// at FileKt.main (File.kt:16)
+// at FileKt.main (File.kt:-1) 
+```
+
+### `error`
+Signal an illegal state or a condition in the code that logically should not occur.
+```kotlin
+class User(val name: String, val role: String)
+
+fun processUserRole(user: User) {
+    when (user.role) {
+        "admin" -> println("${user.name} is an admin.")
+        "editor" -> println("${user.name} is an editor.")
+        "viewer" -> println("${user.name} is a viewer.")
+        else -> error("Undefined role: ${user.role}")
+    }
+}
+
+fun main() {
+    // This works as expected
+    val user1 = User("Alice", "admin")
+    processUserRole(user1)
+
+    // This throws an IllegalStateException
+    val user2 = User("Bob", "guest")
+    processUserRole(user2)
+}
+// Alice is an admin.
+// Exception in thread "main" java.lang.IllegalStateException: Undefined role: guest
+// at FileKt.processUserRole (File.kt:8)
+// at FileKt.main (File.kt:20)
+// at FileKt.main (File.kt:-1)
+```
+
+### `require`
+Validate input arguments when they are crucial for the function's operation.
+```kotlin
+fun getIndices(count: Int): List<Int> {
+    require(count >= 0) { "Count must be non-negative. You set count to $count." }
+    return List(count) { it + 1 }
+}
+
+fun main() {
+    println(getIndices(-1))
+}
+// Exception in thread "main" java.lang.IllegalArgumentException: Count must be non-negative. You set count to -1.
+// at FileKt.getIndices (File.kt:2)
+// at FileKt.main (File.kt:8)
+// at FileKt.main (File.kt:-1)
+```
+
 ## Coroutines
 
 ```kotlin
