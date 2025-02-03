@@ -602,3 +602,66 @@ fun main() {
     } // JO jo MAY may SUE sue
 }
 ```
+
+## Handling errors
+ 
+### `catch`
+`catch` is an intermediate operator that can process exceptions that occur in a flow.
+```kotlin
+fun main() = runBlocking {
+    exceptionalFlow
+        .catch { cause ->
+            println("\nHandled: $cause")
+            emit(-1)
+        }
+        .collect {
+            print("$it ")
+        }
+}
+// 0 1 2 3 4
+// Handled: UnhappyFlowException
+// -1
+```
+
+It only operates on its upstream:
+
+<img src=../img/core/12/catch.png width=500 height=180>
+
+### `retry`
+When you encounter an exception in the processing of a flow, rather than simply terminate 
+with an error message, you might want to retry the operation.
+
+```kotlin
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.*
+import kotlin.random.Random
+
+class CommunicationException : Exception("Communication failed!")
+
+val unreliableFlow = flow {
+    println("Starting the flow!")
+    repeat(10) { number ->
+        if (Random.nextDouble() < 0.1) throw CommunicationException()
+        emit(number)
+    }
+}
+
+fun main() = runBlocking {
+    unreliableFlow
+        .retry(5) { cause ->
+            println("\nHandled: $cause")
+            cause is CommunicationException
+        }
+        .collect { number ->
+            print("$number ")
+        }
+}
+// Starting the flow!
+// 0 1 2 3 4
+// Handled: CommunicationException: Communication failed!
+// Starting the flow!
+// 0 1 2 3
+// Handled: CommunicationException: Communication failed!
+// Starting the flow!
+// 0 1 2 3 4 5 6 7 8 9
+```

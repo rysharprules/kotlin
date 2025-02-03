@@ -26,6 +26,7 @@ Study notes and examples for Kotlin from absolute beginner onwards.
 11. [Concurrency](core/11_concurrency.md)
 12. [Flows](core/12_flows.md)
 13. [Exception Handling](core/13_exceptions.md)
+14. [Testing](core/14_testing.md)
 
 ### Spring
 - [Spring notes](spring/spring.md)
