@@ -1,5 +1,58 @@
 # Testing
 
+## Mocking with `mockk`
+
+See [mockk](https://mockk.io/) documentation.
+
+Use `lateinit` to tell compiler you will instantiate this later
+```kotlin
+internal class TheTestClass {
+    // Use lateinit to tell compiler you will instantiate this later
+    private lateinit var classUnderTest: ClassUnderTest
+```
+To run some set up code before each test, use `@BeforeEach`. In Java this is static, but not required here
+```kotlin
+@BeforeEach
+fun setUp() {
+    // ...
+}
+```
+Create mocks with `mockk`. Setting `relaxed = true` will stop exceptions occurring when unmocked fields are needed. [Relaxed mock](https://mockk.io/#relaxed-mock).
+```kotlin
+dependency = mockk(relaxed = true)
+```
+Configure the mock with `every`:
+```kotlin
+every {
+    dependency.method(
+        someValue = any(), // value can be anything
+        antherValue = specificValue // specific
+    )
+} returns {
+    whatTheMethodReturns // return value of the method, can be literal or reference
+}
+```
+See a list of possible [answers](https://mockk.io/#answers).
+
+## Asserting with `assertk`
+
+See [assertk](https://willowtreeapps.github.io/assertk/assertk/assertk.assertions/index.html) documentation.
+
+### isEqualTo
+```kotlin
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+
+assertThat(TITLE).isEqualTo(response.title)
+```
+### `isTrue`
+```kotlin
+import assertk.assertThat
+import assertk.assertions.isTrue
+
+assertThat(response.isActive).isTrue()
+```
+
 ## Coroutines and flows
 
 ### `advanceUntilIdle`
